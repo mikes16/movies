@@ -5,6 +5,8 @@ import com.gamecast.movies.di.DaggerAppComponent
 
 class MyApplication: Application() {
 
-    val appComponent = DaggerAppComponent.create()
+    val appComponent by lazy {
+        DaggerAppComponent.factory().create(this)
+    }
 
 }

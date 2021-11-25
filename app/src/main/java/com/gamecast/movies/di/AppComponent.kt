@@ -1,9 +1,35 @@
 package com.gamecast.movies.di
 
-import com.gamecast.movies.home.HomeFragment
+import android.content.Context
+import com.gamecast.domain.di.DataComponent
+import com.gamecast.movies.home.di.HomeComponent
+import dagger.BindsInstance
 import dagger.Component
+import dagger.Module
+import javax.inject.Singleton
 
-@Component
+@Singleton
+@Component(
+    modules = [
+        AppModule::class,
+        ViewModelModule::class,
+        SubcomponentsModule::class
+    ]
+)
 interface AppComponent {
-    fun inject(fragment: HomeFragment)
+
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance applicationContext: Context): AppComponent
+    }
+
+    fun homeComponent(): HomeComponent.Factory
 }
+
+@Module(
+    subcomponents = [
+        DataComponent::class,
+        HomeComponent::class
+    ]
+)
+object SubcomponentsModule
