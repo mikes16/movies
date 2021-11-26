@@ -1,4 +1,5 @@
 package com.gamecast.domain.models
 
-class Movie {
-}
+data class Movie(
+    val title: String = ""
+)

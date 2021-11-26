@@ -1,7 +1,10 @@
 package com.gamecast.movies.di
 
 import android.content.Context
-import com.gamecast.domain.di.DataComponent
+import com.gamecast.data.di.DataBindModule
+import com.gamecast.data.di.DataModule
+import com.gamecast.domain.di.DomainModule
+import com.gamecast.domain.repository.MoviesRepository
 import com.gamecast.movies.home.di.HomeComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -13,7 +16,9 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         ViewModelModule::class,
-        SubcomponentsModule::class
+        SubcomponentsModule::class,
+        DataModule::class,
+        DomainModule::class
     ]
 )
 interface AppComponent {
@@ -28,7 +33,6 @@ interface AppComponent {
 
 @Module(
     subcomponents = [
-        DataComponent::class,
         HomeComponent::class
     ]
 )

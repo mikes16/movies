@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.gamecast.movies.MyApplication
 import com.gamecast.movies.databinding.FragmentHomeBinding
-import com.gamecast.movies.di.ViewModelFactory
 import com.gamecast.movies.home.adapter.HomeCardAdapter
 import com.gamecast.movies.home.adapter.MovieItem
+import com.gamecast.movies.utils.ViewModelFactory
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
@@ -43,6 +43,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.loadMovies()
 
         binding.recyclerView.apply {
             adapter = HomeCardAdapter(

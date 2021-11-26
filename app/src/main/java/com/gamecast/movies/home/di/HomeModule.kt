@@ -1,7 +1,7 @@
 package com.gamecast.movies.home.di
 
 import androidx.lifecycle.ViewModel
-import com.gamecast.movies.di.ViewModelKey
+import com.gamecast.movies.di.annotations.ViewModelKey
 import com.gamecast.movies.home.HomeViewModel
 import dagger.Binds
 import dagger.Module

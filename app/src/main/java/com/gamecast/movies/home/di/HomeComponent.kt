@@ -12,5 +12,4 @@ interface HomeComponent {
     }
 
     fun inject(fragment: HomeFragment)
-
 }
