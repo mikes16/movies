@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.gamecast.movies.MyApplication
 import com.gamecast.movies.databinding.FragmentHomeBinding
 import com.gamecast.movies.home.adapter.HomeCardAdapter
-import com.gamecast.movies.home.adapter.MovieItem
 import com.gamecast.movies.utils.ViewModelFactory
+import com.gamecast.utils.onSuccess
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
@@ -44,23 +49,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loadMovies()
-
         binding.recyclerView.apply {
-            adapter = HomeCardAdapter(
-                arrayOf(
-                    MovieItem(
-                        "/cinER0ESG0eJ49kXlExM0MEWGxW.jpg",
-                        "Shang Shi",
-                        "Shang-Chi and the Legend of the Ten Rings"
-                    ),
-                    MovieItem("/iUgygt3fscRoKWCV1d0C7FbM9TP.jpg", "No Time to Die", "No Subtitle"),
-                    MovieItem("/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg", "Venom", "Let There Be Carnage"),
-                    MovieItem("/jKuDyqx7jrjiR9cDzB5pxzhJAdv.jpg", "Finch", "Test 2"),
-                    MovieItem("/chTkFGToW5bsyw3hgLAe4S5Gt3.jpg", "Apex", "Other"),
-                    MovieItem("/lyvszvJJqqI8aqBJ70XzdCNoK0y.jpg", "Eternals", "Nooooo")
-                )
-            )
+            adapter = HomeCardAdapter()
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.postStateFlow.collect { result ->
+                    result.onSuccess { success ->
+                        val adapter = binding.recyclerView.adapter as HomeCardAdapter
+                        adapter.submitList(success.movies)
+                    }
+                }
+            }
         }
     }
 }

@@ -1,9 +1,11 @@
 package com.gamecast.data.repository
 
-import com.gamecast.data.remote.entities.MovieEntity
+import com.gamecast.domain.models.Movies
+import com.gamecast.utils.Failure
+import com.gamecast.utils.Result
 
 interface MoviesDataSource {
 
-    fun getPopularMovies(): List<MovieEntity>
+    suspend fun getPopularMovies(): Result<Failure, Movies>
 
 }

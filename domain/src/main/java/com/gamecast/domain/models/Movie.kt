@@ -1,5 +1,10 @@
 package com.gamecast.domain.models
 
 data class Movie(
-    val title: String = ""
+    val id: String,
+    val backdropImg: String,
+    val poster: String,
+    val title: String,
+    val overview: String,
+    val popularity: Float
 )

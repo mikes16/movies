@@ -1,6 +1,7 @@
 package com.gamecast.data.di
 
 import com.gamecast.data.local.MoviesLocalDataSource
+import com.gamecast.data.remote.MoviesApi
 import com.gamecast.data.remote.MoviesRemoteDataSource
 import com.gamecast.data.repository.MoviesDataSource
 import com.gamecast.data.repository.MoviesRepositoryImpl
@@ -10,7 +11,10 @@ import dagger.Provides
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-@Module(includes = [DataBindModule::class])
+@Module(includes = [
+    DataBindModule::class,
+    NetworkModule::class
+])
 object DataModule {
 
     enum class Source {
@@ -32,7 +36,9 @@ object DataModule {
     @JvmStatic
     @SourceType(Source.REMOTE)
     @Provides
-    fun providesMoviesRemoteDataSource(): MoviesDataSource {
-        return MoviesRemoteDataSource()
+    fun providesMoviesRemoteDataSource(
+        api: MoviesApi
+    ): MoviesDataSource {
+        return MoviesRemoteDataSource(api)
     }
 }

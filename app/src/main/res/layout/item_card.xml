@@ -5,7 +5,7 @@
     <data>
         <variable
             name="movieItem"
-            type="com.gamecast.movies.home.adapter.MovieItem" />
+            type="com.gamecast.domain.models.Movie" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -18,7 +18,7 @@
             android:id="@+id/card_image"
             android:layout_width="130dp"
             android:layout_height="180dp"
-            app:imageUrl="@{movieItem.image}"
+            app:imageUrl="@{movieItem.poster}"
             tools:scaleType="centerCrop"
             tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -44,7 +44,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:textSize="12sp"
-            android:text="@{movieItem.subtitle}"
+            android:text="@{movieItem.overview}"
             tools:text="Movie Subtitle Too Long" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
