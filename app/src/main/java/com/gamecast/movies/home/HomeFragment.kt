@@ -57,8 +57,8 @@ class HomeFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.postStateFlow.collect { result ->
                     result.onSuccess { success ->
-                        val adapter = binding.recyclerView.adapter as HomeCardAdapter
-                        adapter.submitList(success.movies)
+                        val adapter = binding.recyclerView.adapter as? HomeCardAdapter
+                        adapter?.submitList(success.movies)
                     }
                 }
             }
