@@ -5,10 +5,12 @@ import com.gamecast.domain.usecase.GetPopularMoviesUseCase
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Singleton
 
 @Module
 object DomainModule {
 
+    @Singleton
     @Provides
     fun provideGetPopularMovies(
         moviesRepository: MoviesRepository,

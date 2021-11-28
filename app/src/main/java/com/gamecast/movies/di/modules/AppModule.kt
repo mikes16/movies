@@ -1,4 +1,4 @@
-package com.gamecast.movies.di
+package com.gamecast.movies.di.modules
 
 import dagger.Module
 import dagger.Provides

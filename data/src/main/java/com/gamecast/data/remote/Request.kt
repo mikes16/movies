@@ -14,6 +14,7 @@ fun <T> Response<T>.request(default: T): Result<Failure, T> {
                 .also { Log.w("Network", "Unsuccessful response: $this") }
         }
     } catch (exception: Throwable) {
+        exception.printStackTrace()
         Result.Failure(Failure.ServerError(exception))
     }
 }

@@ -1,11 +1,9 @@
-package com.gamecast.data.di
+package com.gamecast.data.di.modules
 
 import com.gamecast.data.local.MoviesLocalDataSource
 import com.gamecast.data.remote.MoviesApi
 import com.gamecast.data.remote.MoviesRemoteDataSource
 import com.gamecast.data.repository.MoviesDataSource
-import com.gamecast.data.repository.MoviesRepositoryImpl
-import com.gamecast.domain.repository.MoviesRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
@@ -27,6 +25,7 @@ object DataModule {
     annotation class SourceType(val value: Source)
 
     @JvmStatic
+    @Singleton
     @SourceType(Source.LOCAL)
     @Provides
     fun providesMoviesLocalDataSource(): MoviesDataSource {
@@ -34,6 +33,7 @@ object DataModule {
     }
 
     @JvmStatic
+    @Singleton
     @SourceType(Source.REMOTE)
     @Provides
     fun providesMoviesRemoteDataSource(

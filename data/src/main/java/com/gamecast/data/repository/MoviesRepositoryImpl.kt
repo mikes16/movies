@@ -1,8 +1,8 @@
 package com.gamecast.data.repository
 
 import android.util.Log
-import com.gamecast.data.di.DataModule.Source
-import com.gamecast.data.di.DataModule.SourceType
+import com.gamecast.data.di.modules.DataModule.Source
+import com.gamecast.data.di.modules.DataModule.SourceType
 import com.gamecast.domain.models.Movies
 import com.gamecast.domain.repository.MoviesRepository
 import com.gamecast.utils.Failure

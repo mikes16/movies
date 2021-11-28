@@ -1,4 +1,4 @@
-package com.gamecast.movies.di
+package com.gamecast.movies.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

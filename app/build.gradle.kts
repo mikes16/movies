@@ -1,22 +1,27 @@
+import dependencies.Dependencies
+import dependencies.TestDependencies
+import dependencies.TestAndroidDependencies
+import dependencies.AnnotationProcessorsDependencies
+
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    id(Plugins.ANDROID_APPLICATION)
+    kotlin(Plugins.ANDROID)
+    kotlin(Plugins.KAPT)
 }
 
 android {
-    compileSdk = 31
+    compileSdk = ApplicationConfig.COMPILE_SDK_VERSION
 
     defaultConfig {
-        applicationId = "com.gamecast.movies"
-        minSdk = 21
-        targetSdk = 31
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = ApplicationConfig.APPLICATION_ID
+        minSdk = ApplicationConfig.MIN_SDK_VERSION
+        targetSdk = ApplicationConfig.TARGET_SDK_VERSION
+        versionCode = ApplicationConfig.VERSION_CODE
+        versionName = ApplicationConfig.VERSION_NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = ApplicationConfig.TEST_INSTRUMENTATION_RUNNER
 
-        buildConfigField("String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/\"")
+        buildConfigField("String", ConfigFields.IMAGE_BASE_URL, "\"${ConfigValues.IMAGE_BASE_URL}\"")
     }
 
     buildTypes {
@@ -34,7 +39,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        dataBinding = ApplicationConfig.DATA_BINDING_ENABLED
     }
 
     setDynamicFeatures(mutableSetOf(
@@ -45,20 +50,21 @@ android {
 dependencies {
     implementation(project(BuildModules.DATA))
     implementation(project(BuildModules.DOMAIN))
-    implementation(project(":utils"))
+    implementation(project(BuildModules.UTILS))
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.2")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.5")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.5")
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
-    implementation("com.google.dagger:dagger:2.39.1")
-    kapt("com.google.dagger:dagger-compiler:2.39.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(Dependencies.LIFECYCLE_KTX)
+    implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.CONSTRAINT_LAYOUT)
+    implementation(Dependencies.NAVIGATION_FRAGMENT_KTX)
+    implementation(Dependencies.NAVIGATION_UI_KTX)
+    implementation(Dependencies.GLIDE)
+    implementation(Dependencies.DAGGER)
+
+    kapt(AnnotationProcessorsDependencies.GLIDE)
+    kapt(AnnotationProcessorsDependencies.DAGGER)
+
+    testImplementation(TestDependencies.JUNIT)
+    androidTestImplementation(TestAndroidDependencies.EXT)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO)
 }

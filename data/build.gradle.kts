@@ -1,21 +1,30 @@
+import dependencies.Dependencies
+import dependencies.TestDependencies
+import dependencies.TestAndroidDependencies
+import dependencies.AnnotationProcessorsDependencies
+
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    id(Plugins.ANDROID_LIBRARY)
+    kotlin(Plugins.ANDROID)
+    kotlin(Plugins.KAPT)
 }
 
 android {
-    compileSdk = 31
+    compileSdk = ApplicationConfig.COMPILE_SDK_VERSION
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 31
-        version = 1
+        minSdk = ApplicationConfig.MIN_SDK_VERSION
+        targetSdk = ApplicationConfig.TARGET_SDK_VERSION
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = ApplicationConfig.TEST_INSTRUMENTATION_RUNNER
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField("String", "TMDB_API_KEY", "\"${properties["tmdbApiKey"]}\"")
+        try {
+            buildConfigField("String", ConfigFields.TMDB_API_KEY, "\"${properties["tmdbApiKey"]}\"")
+        } catch (exception: Exception) {
+            throw InvalidUserDataException("You should define 'tmdbApiKey' un gradle.properties" +
+                    "visit 'https://developers.themoviedb.org/' for more information")
+        }
     }
 
     buildTypes {
@@ -37,16 +46,16 @@ dependencies {
     implementation(project(BuildModules.DOMAIN))
     implementation(project(BuildModules.UTILS))
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
-    testImplementation("junit:junit:4.13.2")
-    implementation("com.google.dagger:dagger:2.39.1")
-    kapt("com.google.dagger:dagger-compiler:2.39.1")
-    api("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.DAGGER)
+    api(Dependencies.RETROFIT)
+    implementation(Dependencies.RETROFIT_GSON)
+    implementation(Dependencies.OKHTTP)
+    implementation(Dependencies.COROUTINES)
+
+    kapt(AnnotationProcessorsDependencies.DAGGER)
+
+    testImplementation(TestDependencies.JUNIT)
+    androidTestImplementation(TestAndroidDependencies.EXT)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO)
 }

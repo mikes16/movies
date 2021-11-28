@@ -1,14 +1,21 @@
+import dependencies.Dependencies
+import dependencies.TestDependencies
+import dependencies.TestAndroidDependencies
+import dependencies.AnnotationProcessorsDependencies
+
 plugins {
-    id("com.android.dynamic-feature")
-    kotlin("android")
+    id(Plugins.DYNAMIC_FEATURE)
+    kotlin(Plugins.ANDROID)
+    kotlin(Plugins.KAPT)
 }
 
 android {
-    compileSdk = 31
+    compileSdk = ApplicationConfig.COMPILE_SDK_VERSION
 
     defaultConfig {
-        minSdk = 21
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        minSdk = ApplicationConfig.MIN_SDK_VERSION
+
+        testInstrumentationRunner = ApplicationConfig.TEST_INSTRUMENTATION_RUNNER
     }
 
     buildTypes {
@@ -22,9 +29,12 @@ android {
 dependencies {
     implementation(project(BuildModules.APP))
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.annotation:annotation:1.3.0")
+    implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.DAGGER)
+
+    kapt(AnnotationProcessorsDependencies.DAGGER)
+
+    testImplementation(TestDependencies.JUNIT)
+    androidTestImplementation(TestAndroidDependencies.EXT)
+    androidTestImplementation(TestAndroidDependencies.ESPRESSO)
 }

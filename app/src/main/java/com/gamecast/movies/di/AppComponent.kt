@@ -1,10 +1,10 @@
 package com.gamecast.movies.di
 
 import android.content.Context
-import com.gamecast.data.di.DataBindModule
-import com.gamecast.data.di.DataModule
+import com.gamecast.data.di.modules.DataModule
 import com.gamecast.domain.di.DomainModule
-import com.gamecast.domain.repository.MoviesRepository
+import com.gamecast.movies.di.modules.AppModule
+import com.gamecast.movies.di.modules.ViewModelModule
 import com.gamecast.movies.home.di.HomeComponent
 import dagger.BindsInstance
 import dagger.Component

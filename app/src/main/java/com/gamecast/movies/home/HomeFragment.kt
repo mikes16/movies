@@ -10,12 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.gamecast.domain.models.Movies
 import com.gamecast.movies.MyApplication
 import com.gamecast.movies.databinding.FragmentHomeBinding
 import com.gamecast.movies.home.adapter.HomeCardAdapter
 import com.gamecast.movies.utils.ViewModelFactory
+import com.gamecast.movies.utils.launchAndRepeatWithViewLifecycle
+import com.gamecast.utils.Failure
+import com.gamecast.utils.Result
 import com.gamecast.utils.onSuccess
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -53,13 +59,11 @@ class HomeFragment : Fragment() {
             adapter = HomeCardAdapter()
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.postStateFlow.collect { result ->
-                    result.onSuccess { success ->
-                        val adapter = binding.recyclerView.adapter as? HomeCardAdapter
-                        adapter?.submitList(success.movies)
-                    }
+        launchAndRepeatWithViewLifecycle {
+            viewModel.postStateFlow.collect { result ->
+                result.onSuccess { success ->
+                    val adapter = binding.recyclerView.adapter as? HomeCardAdapter
+                    adapter?.submitList(success.movies)
                 }
             }
         }

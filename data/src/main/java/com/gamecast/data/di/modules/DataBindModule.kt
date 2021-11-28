@@ -1,4 +1,4 @@
-package com.gamecast.data.di
+package com.gamecast.data.di.modules
 
 import com.gamecast.data.repository.MoviesRepositoryImpl
 import com.gamecast.domain.repository.MoviesRepository
